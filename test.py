@@ -369,120 +369,9 @@ class YAMLLanguageInterpreter():
                 email_dict[key] = value
         
         return email_dict
-           
-def testModule():
-    crm_interaction = Interactions()
-    crm_interaction.login()
-    ok = crm_interaction.getModuleWithID('85dcb953-64b3-41df-b1d1-5f99d14c6bbb', 'BB_Hosts', ['applications_c'])
-    print(ok)
-    
-def testPost():
-    user_input_params = '[{"api_field":"$from","searchValue":"06/02/2024","api_function_record":"cb935003-3069-dda5-bf52-630e19aefa3f","api_fields_type":"date_type","api_function_usedVar":"$from"},{"api_field":"$till","searchValue":"06/03/2024","api_function_record":"7c4b16b0-ea5f-e203-1c0f-630e19614ff0","api_fields_type":"date_type","api_function_usedVar":"$till"}]'
-    crm_interaction = Interactions()
-    crm_interaction.login()
-    result = crm_interaction.getIntegrationWithID('db7dabe7-4fec-bfb3-e6cc-63676e847883', user_input_params)
-    print(result)
-    
-def testTemplate():
-    crm_interaction = Interactions()
-    crm_interaction.login()
-    result = crm_interaction.getHTMLTemplateWithID('16e000a5-e417-4be6-f5a9-66c2e0744402')
-    print(html.unescape(result))
-
-def testInteg():
-    crm_interaction = Interactions()
-    crm_interaction.login()
-    result = crm_interaction.getIntegrationWithID('5f38872e-08a5-22dd-720b-65c8c5084358', f'[{{}}]')
-    print(result)
     
 def main(arguments):
     interpreter = YAMLLanguageInterpreter()
-    
-    arguments = ["path", """    
-Rules:
-  -
-    Step: 1
-    ActionType: report
-    ReportType: config
-    ReportName: 'Test Report Name'
-    Orientation: Landscape
-    PageSize: Letter
-  -
-    Step: 2
-    ActionType: report
-    ReportType: coverpage
-    Title: 'Test Tile'
-    Description: 'Test Description'
-    TemplateId: 5dad0c10-4f06-bec2-e52d-66c2dffd135c
-    TemplateName: 'Default Cover Page'
-  -
-    Step: 3
-    ActionType: report
-    ReportType: index
-    TemplateId: null
-    TemplateName: null
-  -
-    Step: 4
-    ActionType: report
-    ReportType: table
-    IntegrationID: 5f38872e-08a5-22dd-720b-65c8c5084358
-    IntegrationName: ' Zabbix-Get Problems - Babtain'
-    AliasName: a
-    UserInput: false
-    UserInputVars: null
-    TemplateId: 378e309a-97f3-068e-e9a1-66c2e0a59228
-    TemplateName: 'Default Table'
-#   -
-#     Step: 5
-#     ActionType: report
-#     ReportType: pie
-#     IntegrationID: 38489718-37d9-d5f3-1b70-65ed61672777
-#     IntegrationName: 'SNMP Availability AMG'
-#     AliasName: b
-#     UserInput: false
-#     UserInputVars: null
-#     TemplateId: ef967964-dfcd-ac49-a207-66c2d972eb34
-#     TemplateName: 'Default Pie Chart'
-#   -
-#     Step: 6
-#     ActionType: report
-#     ReportType: line
-#     IntegrationID: 114394f7-2320-6df1-43fb-65eeebe38171
-#     IntegrationName: 'Memory pages per second- Mdaemon-ESG.babtaingroup.com'
-#     AliasName: c
-#     UserInput: false
-#     UserInputVars: null
-#     TemplateId: 5b0d2dac-d106-bcd1-7328-66c2e03c683a
-#     TemplateName: 'Default Line'
-#   -
-#     Step: 7
-#     ActionType: report
-#     ReportType: bar
-#     IntegrationID: 38489718-37d9-d5f3-1b70-65ed61672777
-#     IntegrationName: 'SNMP Availability AMG'
-#     AliasName: d
-#     UserInput: false
-#     UserInputVars: null
-#     TemplateId: 31fef628-e312-854a-d418-66ac5f7d9f2f
-#     TemplateName: 'Default Bar Chart'
-#   -
-#     Step: 8
-#     ActionType: report
-#     ReportType: donut
-#     IntegrationID: 38489718-37d9-d5f3-1b70-65ed61672777
-#     IntegrationName: 'SNMP Availability AMG'
-#     AliasName: e
-#     UserInput: false
-#     UserInputVars: null
-#     TemplateId: c08ed299-f282-ba3d-f394-66c8452589bb
-#     TemplateName: 'Default Donut Chart'
-  -
-    Step: 10
-    ActionType: report
-    ReportType: close
-    TemplateId: 69624102-595c-f08f-6b86-66c2df2a615f
-    TemplateName: 'Default Close'
-""","[to:\"abdallahmtawfik@gmail.com\", cc:, bcc:, emailTemplateID:\"b7e5f922-fdbf-d83f-f9a5-65a3b3b4fa45\", emailTemplateName:null]"]
     
     interpreter.emailArguments = interpreter.convert_to_dict(arguments[2])
     
@@ -498,10 +387,6 @@ Rules:
     execution_result = interpreter.executeInterpretedText()
     print("Execution Result:", execution_result)
     
-    testModule()
-    # testPost()
-    # testTemplate()
-    # testInteg()
 
 if __name__ == '__main__':
     import time
@@ -512,12 +397,3 @@ if __name__ == '__main__':
     execution_time = end_time - start_time
 
     print("Execution time:", execution_time, "seconds")
-
-
-# curl -X POST -H "Content-Type: application/json" -d '{"repordid":"okok"}' http://127.0.0.1:4440/scheduler/api/45/webhook/XrozaCEXhk7wL1jalLgV4J9CsKWdbsR8#Interpreter
-# php modify_dashlet-copy.php -f getAPIReportResponse --loginuser "atawfik@opexpert.com" --loginpass "8p%SF6fGcdtV" --url "https://app02.opexpert.com/" --reportID "db7dabe7-4fec-bfb3-e6cc-63676e847883" --userinputparams '[{'$from': '06/02/2024', '$till': '06/03/2024'}]'
-# php modify_dashlet-new.php -f getAPIReportResponse --loginuser "atawfik@opexpert.com" --loginpass "8p%SF6fGcdtV" --url "https://app02.opexpert.com/" --reportID "db7dabe7-4fec-bfb3-e6cc-63676e847883" --userinputparams "[{'$from': '06/02/2024', '$till': '06/03/2024'}]"
-
-
-
-# curl -X POST -H "Content-Type: application/json" -d '{"yaml":[{"Step":1,"ActionType":"module","moduleName":"Contacts","recordID":"9df24ed1-145a-783e-6720-65f4317edc65","recordName":"Oreki Crow","AliasName":"aa","moduleVars":{"name":"Name"}},{"Step":2,"Condition":"if {  aa.name == \"Oreki Crow\""},{"Step":3,"ActionType":"function","FunctionID":"74f18c37-db4d-f558-c0d1-663468bfeebe","FunctionName":"Abdallah's Hello Function","AliasName":"aa","InputVars":null,"OutputVars":"$value"},{"Step":4,"Condition":"}"}],"email":"[to:, cc:, bcc:, emailTemplateID:, emailTemplateName:null]"}' http://dev.opexpert.io/scheduler/api/45/webhook/h8TvFkLQwU6corJikdWArVeW5EEhbPVW#InterpreterWebhook
